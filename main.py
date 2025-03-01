@@ -23,7 +23,7 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/makecall/{phone}")
+@app.post("/makecall/{phone}")
 def read_item(phone: str, audiofile: str = "/opt/sipcall/audio/play2.wav"):
     command = ["/bin/sipcall",
         "-sd", conf["domain"],
