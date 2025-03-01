@@ -1,34 +1,22 @@
+from threading import Thread
 from typing import Union
+import subprocess
 import time
 import sys
-from threading import Thread
-import subprocess
 
 import yaml
 from fastapi import FastAPI
 
 
-running = False
-process = None
 with open("/opt/sipcall/config.yaml", "r", encoding="utf8") as file:
     conf = yaml.load(file, Loader=yaml.FullLoader)
 print(conf["domain"])
 
 
 def run_command(command):
-    global running, process
-    if running:
-        # process.kill()
-        print("Terminating command...")
-        process.terminate()
-        process.wait()
-        # time.sleep(2)
-    running = True
-    process = subprocess.Popen(command)
-    running = False
+    subprocess.Popen(command)
 
 app = FastAPI()
-
 
 @app.get("/")
 def read_root():
@@ -49,14 +37,4 @@ def read_item(phone: str, audiofile: str = "/opt/sipcall/audio/play2.wav"):
         "-t", conf["timeout"],
     ]
     Thread(target=run_command, args=(command,), daemon=True).start()
-    
-    # result = subprocess.run(
-    #     command,
-    #     stdout=subprocess.PIPE,
-    #     stderr=subprocess.PIPE,
-    #     check=False,
-    #     timeout=100,
-    # )
-    # print(result.stdout)
-    # print(result.stderr)
     return {"phone": phone, "audiofile": audiofile, "command": command}
