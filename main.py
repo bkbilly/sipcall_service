@@ -10,10 +10,13 @@ from fastapi import FastAPI
 
 running = False
 process = None
-conf = yaml.load("/opt/sipcall/config.yaml", Loader=yaml.FullLoader)
+with open("/opt/sipcall/config.yaml", "r", encoding="utf8") as file:
+    conf = yaml.load(file, Loader=yaml.FullLoader)
+print(conf["domain"])
 
 
 def run_command(command):
+    global running, process
     if running:
         # process.kill()
         print("Terminating command...")

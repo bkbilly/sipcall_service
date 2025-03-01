@@ -1,5 +1,5 @@
 domain: "myhost"
-port: "5060"
+port: "0"
 username: "myusername"
 password: "mypassword"
 repeat: "10"
