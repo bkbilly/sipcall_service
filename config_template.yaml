@@ -1,0 +1,6 @@
+domain: "myhost"
+port: "5060"
+username: "myusername"
+password: "mypassword"
+repeat: "10"
+timeout: "50"
