@@ -28,11 +28,11 @@ def read_root():
 @app.post("/makecall/{phone}")
 def read_item(phone: str, request: Request):
     # print(dict(request.query_params))
-    desc = request.query_params.get("desc").replace("+", " ")
+    desc = request.query_params.get("desc").replace("+", " ").lower()
     audiofile = "/opt/sipcall/audio/play2.wav"
     for file in glob.glob("/opt/sipcall/audio/*.wav"):
         filename = os.path.splitext(os.path.basename(file))[0]
-        if filename in desc:
+        if filename.lower() in desc:
             audiofile = file
 
     command = ["/bin/sipcall",
